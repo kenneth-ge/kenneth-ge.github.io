@@ -1,132 +1,170 @@
-import string
-import keyword
-import _jsre as re
+import sys
+import time
+import binascii
 
-from browser import document as doc
-from browser import html
+import tb as traceback
+import javascript
 
-builtin_funcs = ("abs|divmod|input|open|staticmethod|all|enumerate|int|ord|str|any|" +
-        "eval|isinstance|pow|sum|basestring|execfile|issubclass|print|super|" +
-        "binfile|iter|property|tuple|bool|filter|len|range|type|bytearray|" +
-        "float|list|raw_input|unichr|callable|format|locals|reduce|unicode|" +
-        "chr|frozenset|long|reload|vars|classmethod|getattr|map|repr|xrange|" +
-        "cmp|globals|max|reversed|zip|compile|hasattr|memoryview|round|" +
-        "__import__|complex|hash|min|set|apply|delattr|help|next|setattr|" +
-        "buffer|dict|hex|object|slice|coerce|dir|id|oct|sorted|intern")
+from browser import document as doc, window, alert, bind, html
+import browser.widgets.dialog as dialog
 
-kw_pattern = '^('+'|'.join(keyword.kwlist)+')$'
-bf_pattern = '^('+builtin_funcs+')$'
+# set height of container to 75% of screen
+_height = doc.documentElement.clientHeight
+_s = doc['container']
+_s.style.height = '%spx' % int(_height * 0.85)
 
-def colorize(txt):
-    res = ''
-    i = 0
-    name = ''
-    while i<len(txt):
-        car = txt[i]
-        if car in ["'",'"']:
-            k = i+1
-            while k<len(txt):
-                if txt[k]==car:
-                    res += html.SPAN(txt[i:k+1],Class='string')
-                    i = k
-                    break
-                k += 1
-        elif car == '#': # comment
-            res += html.SPAN(txt[i:],Class='comment')
-            break
-        elif car in string.ascii_letters+'_':
-            name += car
-        elif car in string.digits and name:
-            name += car
+has_ace = True
+try:
+    editor = window.ace.edit("editor")
+    editor.setTheme("ace/theme/solarized_light")
+    editor.session.setMode("ace/mode/python")
+    editor.focus()
+
+    editor.setOptions({
+     'enableLiveAutocompletion': True,
+     'highlightActiveLine': False,
+     'highlightSelectedWord': True
+    })
+except:
+    from browser import html
+    editor = html.TEXTAREA(rows=20, cols=70)
+    doc["editor"] <= editor
+    def get_value(): return editor.value
+    def set_value(x): editor.value = x
+    editor.getValue = get_value
+    editor.setValue = set_value
+    has_ace = False
+
+if hasattr(window, 'localStorage'):
+    from browser.local_storage import storage
+else:
+    storage = None
+
+if 'set_debug' in doc:
+    __BRYTHON__.debug = int(doc['set_debug'].checked)
+
+def reset_src():
+    if "code" in doc.query:
+        code = doc.query.getlist("code")[0]
+        editor.setValue(code)
+    else:
+        if storage is not None and "py_src" in storage:
+            editor.setValue(storage["py_src"])
         else:
-            if name:
-                if re.search(kw_pattern,name):
-                    res += html.SPAN(name,Class='keyword')
-                elif re.search(bf_pattern,name):
-                    res += html.SPAN(name,Class='keyword')
-                else:
-                    res += name
-                name = ''
-            res += car
-        i += 1
-    res += name
-    return res
+            editor.setValue('for i in range(10):\n\tprint(i)')
+    editor.scrollToRow(0)
+    editor.gotoLine(0)
 
-class Editor:
+def reset_src_area():
+    if storage and "py_src" in storage:
+        editor.value = storage["py_src"]
+    else:
+        editor.value = 'for i in range(10):\n\tprint(i)'
 
-    def __init__(self,lnums,panel):
-        self.lnums = lnums
-        self.panel = panel
-        self.selected = None
-        self.panel.bind('scroll',self.scroll)
-        self.panel.bind('mouseup',self.mouseup)
-        self.panel.bind('keydown',self.keydown)
-    
-    def clear(self):
-        self.panel.text = ''
-        self.lnums.text = ''
-    
-    def select(self,lnum):
-        if self.selected is not None:
-            self.panel[self.selected].style.backgroundColor = "#FFF"
-            self.lnums[self.selected].style.backgroundColor = "#EEE"
-        self.selected = lnum
-        self.panel[self.selected].style.backgroundColor = "#EEE"
-        self.lnums[self.selected].style.backgroundColor = "#DDD"
-    
-    def insert(self,pos,text):
-        for i,line in enumerate(text.splitlines()):
-            txt = html.PRE(colorize(line.rstrip()),Class="src")
-            txt.lnum = i
-            self.panel <= txt
-            self.lnums <= html.PRE(str(i+1)+' ')
-        self.panel.scrollTop = 0
-        self.lnums.scrollTop = 0
-        self.select(0)
-        self.panel.focus()
 
-    def mouseup(self,ev):
-        if ev.target.nodeName != 'PRE':
-            return
-        lnum = int(ev.target.lnum)
-        self.select(lnum)
+class cOutput:
+    encoding = 'utf-8'
 
-    def keydown(self,ev):
-        if self.selected is None:
-            return
-        elif ev.keyCode==40: #key down
-            if int(self.selected)<len(self.panel):
-                self.select(self.selected+1)
-        elif ev.keyCode==38: #key up
-            if int(self.selected)>0:
-                self.select(self.selected-1)
-        elif ev.keyCode==9: #tab
-            sel = doc.getSelection()
-            pos = sel.getRangeAt(0)
-            node = html.SPAN('    ')
-            pos.insertNode(node)
-            pos.setStartAfter(node)
-            sel.removeAllRanges()
-            sel.addRange(pos)
-            ev.preventDefault()
+    def __init__(self):
+        self.cons = doc["console"]
+        self.buf = ''
 
-    def scroll(self,ev):
-        pc = ev.target.scrollTop/ev.target.scrollHeight
-        self.lnums.scrollTop = pc*self.lnums.scrollHeight
+    def write(self, data):
+        self.buf += str(data)
 
-def make_editor(width,height):
-    div = html.DIV(Id="main1")
-    lnums = html.DIV(Class="lnum",Id='MyDiv',
-        style={'textAlign':'right',
-        'width':'30px','height':'200px'
-        })
-    src = html.DIV(Class="src",style=dict(width=600,height=200,white_space="pre"),
-        contentEditable=True)
-    div <= lnums+src
-    doc <= div
-    return Editor(lnums,src)
+    def flush(self):
+        self.cons.value += self.buf
+        self.buf = ''
 
-editor = make_editor(20,80)
+    def __len__(self):
+        return len(self.buf)
 
-src = open('/src/Lib/calendar.py').read()
-editor.insert(0,src)
+if "console" in doc:
+    cOut = cOutput()
+    sys.stdout = cOut
+    sys.stderr = cOut
+
+
+def to_str(xx):
+    return str(xx)
+
+info = sys.implementation.version
+version = '%s.%s.%s' % (info.major, info.minor, info.micro)
+if info.releaselevel == "rc":
+    version += f"rc{info.serial}"
+doc['version'].text = version
+
+output = ''
+
+def show_console(ev):
+    doc["console"].value = output
+    doc["console"].cols = 60
+
+# load a Python script
+def load_script(evt):
+    _name = evt.target.value + '?foo=%s' % time.time()
+    editor.setValue(open(_name).read())
+
+# run a script, in global namespace if in_globals is True
+def run(*args):
+    global output
+    doc["console"].value = ''
+    src = editor.getValue()
+    if storage is not None:
+       storage["py_src"] = src
+
+    t0 = time.perf_counter()
+    try:
+        ns = {'__name__':'__main__'}
+        exec(src, ns)
+        state = 1
+    except Exception as exc:
+        traceback.print_exc(file=sys.stderr)
+        state = 0
+    sys.stdout.flush()
+    output = doc["console"].value
+
+    print('<completed in %6.2f ms>' % ((time.perf_counter() - t0) * 1000.0))
+    return state
+
+def show_js(ev):
+    src = editor.getValue()
+    doc["console"].value = javascript.py2js(src, '__main__')
+
+def share_code(ev):
+    src = editor.getValue()
+    if len(src) > 2048:
+        d = dialog.InfoDialog("Copy url",
+                              f"code length is {len(src)}, must be < 2048",
+                              style={"zIndex": 10},
+                              ok=True)
+    else:
+        href = window.location.href.rsplit("?", 1)[0]
+        query = doc.query
+        query["code"] = src
+        url = f"{href}{query}"
+        url = url.replace("(", "%28").replace(")", "%29")
+        d = dialog.Dialog("Copy url")
+        area = html.TEXTAREA(rows=0, cols=0)
+        d.panel <= area
+        area.value = url
+        # copy to clipboard
+        area.focus()
+        area.select()
+        doc.execCommand("copy")
+        d.remove()
+        d = dialog.Dialog("Copy url")
+        d.panel <= html.DIV("url copied in the clipboard<br>Send it to share the code")
+        buttons = html.DIV()
+        ok = html.BUTTON("Ok")
+        buttons <= html.DIV(ok, style={"text-align": "center"})
+        d.panel <= html.BR() + buttons
+
+        @bind(ok, "click")
+        def click(evt):
+            d.remove()
+
+if has_ace:
+    reset_src()
+else:
+    reset_src_area()
