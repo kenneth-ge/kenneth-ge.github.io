@@ -61,24 +61,6 @@ turtle.set_defaults(
     turtle_canvas_wrapper = doc['turtle-div']
 )
 
-qs_lang,language = header.show()
-
-doc["test_suite"].href = f"index.html?lang={language}"
-# other translations
-
-trans = {
-    'report_bugs':{'en':'Please report bugs in the ',
-                   'es':'Poner los bugs en el ',
-                   'fr':"Signalez les bugs dans l'"},
-    'test_page':{'en':'Tests page','es':'P&aacute;gina de pruebas','fr':'Page de tests'},
-    'run':{'en':'run','es':'ejecutar','fr':'Exécuter'},
-    'clear':{'en':'clear','es':'borrar','fr':'Effacer'}
-}
-
-for key in trans:
-    if key in doc:
-        doc[key].html = trans[key].get(language,trans[key]['en'])
-
 def set_debug(ev):
     if ev.target.checked:
         __BRYTHON__.debug = 1
