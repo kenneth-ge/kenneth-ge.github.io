@@ -81,10 +81,12 @@ firsttime = True
 
 def execute():
     global firsttime
-    firsttime = False
+    
     if not firsttime:
         from turtle import restart
         restart()
+    firsttime = False
+    
     timer.set_timeout(ex, 1000)
 
 # next functions are defined in editor.py
