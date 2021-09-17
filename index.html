@@ -77,11 +77,11 @@ doc['set_debug'].bind('change',set_debug)
 def ex():
     editor.run()
 
-firsttime = true
+firsttime = True
 
 def execute():
     global firsttime
-    firsttime = false
+    firsttime = False
     if not firsttime:
         from turtle import restart
         restart()
