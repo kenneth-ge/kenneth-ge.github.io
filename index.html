@@ -53,6 +53,7 @@
 from browser import document as doc, window
 from browser import html
 import header
+from time import sleep
 
 import editor
 
@@ -72,11 +73,17 @@ __BRYTHON__.debug = int(doc['set_debug'].checked)
 # bindings
 doc['set_debug'].bind('change',set_debug)
 
+def execute():
+    from turtle import restart
+    restart()
+    sleep(0.5)
+    editor.run()
+
 # next functions are defined in editor.py
 doc['show_js'].bind('click', editor.show_js)
 doc['share_code'].bind('click', editor.share_code)
 # Create a lambda around editor.run() so that the event object is not passed to it
-doc['run'].bind('click',lambda *args: editor.run())
+doc['run'].bind('click',lambda *args: execute)
 doc['show_console'].bind('click', editor.show_console)
 </script>
 
