@@ -83,8 +83,7 @@ def execute():
     global firsttime
     
     if not firsttime:
-        from turtle import restart
-        restart()
+        turtle.restart()
     firsttime = False
     
     timer.set_timeout(ex, 1000)
