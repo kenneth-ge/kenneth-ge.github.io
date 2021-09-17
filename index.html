@@ -74,9 +74,6 @@ __BRYTHON__.debug = int(doc['set_debug'].checked)
 # bindings
 doc['set_debug'].bind('change',set_debug)
 
-def ex():
-    editor.run()
-
 firsttime = True
 
 def execute():
@@ -91,8 +88,7 @@ def execute():
     
     doc['turtle-div'].innerHTML = " "
     
-    ex()
-    #timer.set_timeout(ex, 1000)
+    editor.run()
 
 # next functions are defined in editor.py
 doc['show_js'].bind('click', editor.show_js)
