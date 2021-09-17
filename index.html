@@ -52,6 +52,8 @@
 <script type="text/python3" id="tests_editor">
 from browser import document as doc, window
 from browser import html
+from browser import timer
+
 import header
 
 import editor
@@ -72,10 +74,13 @@ __BRYTHON__.debug = int(doc['set_debug'].checked)
 # bindings
 doc['set_debug'].bind('change',set_debug)
 
-def execute():
-    #from turtle import restart
-    #restart()
+def ex():
     editor.run()
+
+def execute():
+    from turtle import restart
+    restart()
+    timer.set_timeout(ex, 1000)
 
 # next functions are defined in editor.py
 doc['show_js'].bind('click', editor.show_js)
