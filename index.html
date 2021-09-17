@@ -91,7 +91,8 @@ def execute():
     
     doc['turtle-div'].innerHTML = " "
     
-    timer.set_timeout(ex, 1000)
+    ex()
+    #timer.set_timeout(ex, 1000)
 
 # next functions are defined in editor.py
 doc['show_js'].bind('click', editor.show_js)
