@@ -77,9 +77,14 @@ doc['set_debug'].bind('change',set_debug)
 def ex():
     editor.run()
 
+firsttime = true
+
 def execute():
-    from turtle import restart
-    restart()
+    global firsttime
+    firsttime = false
+    if not firsttime:
+        from turtle import restart
+        restart()
     timer.set_timeout(ex, 1000)
 
 # next functions are defined in editor.py
