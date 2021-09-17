@@ -84,6 +84,9 @@ def execute():
     
     if not firsttime:
         turtle.restart()
+	turtle.set_defaults(
+            turtle_canvas_wrapper = doc['turtle-div']
+        )
     firsttime = False
     
     doc['turtle-div'].innerHTML = " "
