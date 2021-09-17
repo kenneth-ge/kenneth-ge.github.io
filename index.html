@@ -83,7 +83,7 @@ def execute():
 doc['show_js'].bind('click', editor.show_js)
 doc['share_code'].bind('click', editor.share_code)
 # Create a lambda around editor.run() so that the event object is not passed to it
-doc['run'].bind('click',lambda *args: execute)
+doc['run'].bind('click',lambda *args: execute())
 doc['show_console'].bind('click', editor.show_console)
 </script>
 
