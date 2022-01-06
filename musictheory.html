@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+  <head></head>
+  <body>
+    <label for="text">Type in your notes here (any case, any spacing, no duplicates please!)</label><input id="text" name="text" type="text">
+    <button onclick="calc()">Calculate</button>
+    <p id="ans" />
+    
+    <script>
+      function calc(){
+        var textElem = document.getElementById("text")
+        console.log(textElem.value)
+      }
+    </script>
+  </body>
+</html>
