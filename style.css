@@ -1,0 +1,15 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    font-family: 'Courier Prime', monospace;
+    background:
+        url('assets/bird.svg') calc(100% - 40px) 50px / 50px auto no-repeat,
+        url('assets/bird.svg') calc(100% - 90px) 90px / 50px auto no-repeat,
+        url('assets/sand.svg') center calc(450px - 95px) / 110% 100px no-repeat,
+        linear-gradient(to bottom,
+            #E9EEF4 0 450px,
+            #bdab93 450px 900px,
+            #7DA2AD 900px 1600px,
+            #274152 100%);
+}
