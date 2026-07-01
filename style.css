@@ -1,7 +1,7 @@
 body {
     /* Where the sea-foam layer sits; reused for min-height so the body always
        reaches the bottom of the foam even though it's out-of-flow (absolute). */
-    --foam-top: 670px;
+    --foam-top: 720px;
     --foam-height: 260px;
     min-height: max(100vh, calc(var(--foam-top) + var(--foam-height)));
     margin: 0;
@@ -15,8 +15,8 @@ body {
         url('assets/sand.svg') center calc(450px - 95px) / 110% 100px no-repeat,
         linear-gradient(to bottom,
             #E9EEF4 0 450px,
-            #bdab93 450px 800px,
-            #7DA2AD 800px 1600px,
+            #bdab93 450px 850px,
+            #7DA2AD 850px 1600px,
             #274152 100%);
 }
 
