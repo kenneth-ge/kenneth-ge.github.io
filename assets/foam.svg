@@ -1,49 +1,76 @@
-<svg width="360" height="120" viewBox="0 0 360 120" fill="none"
+<svg width="1080" height="400" viewBox="0 0 1080 400" fill="none"
      xmlns="http://www.w3.org/2000/svg">
-  <!-- The band carries the section colors so the sand/water boundary itself is
-       wavy. Top edge = sand (#bdab93), bottom edge = water (#7DA2AD); these match
-       the page gradient blocks above/below, so the strip blends in seamlessly and
-       hides the flat 900px line. -->
+  <!-- Wide tile (~3x) so the scattered foam details only repeat every ~700px on
+       screen, hiding the regularity. Sand = #bdab93, water = #7da2ad (match the
+       CSS gradient stops). Shoreline is straight at y=200; the slope is the CSS rotation. -->
 
   <!-- whole tile = sand color -->
-  <rect x="0" y="0" width="360" height="120" fill="#bdab93"/>
+  <rect x="0" y="0" width="1080" height="400" fill="#bdab93"/>
 
-  <!-- water fills everything BELOW the big wavy boundary -->
-  <path fill="#7da2ad" d="M0 45
-    C30 25 60 22 90 40 C120 58 150 60 180 45 C210 25 240 20 270 38 C300 56 330 55 360 45
-    L360 120 L0 120 Z"/>
+  <!-- water fills everything below the straight shoreline -->
+  <path fill="#7da2ad" d="M0 200 L1080 200 L1080 400 L0 400 Z"/>
 
-  <!-- white foam mass sitting on the wavy shoreline -->
-  <path fill="#ffffff" d="M0 45
-    C30 25 60 22 90 40 C120 58 150 60 180 45 C210 25 240 20 270 38 C300 56 330 55 360 45
-    L360 78
-    C330 92 300 96 270 82 C240 70 210 68 180 82 C150 94 120 96 90 82 C60 70 30 72 0 78 Z"/>
+  <!-- white foam mass: straight top, gentle swoops below that are flat (horizontal
+       tangent) at every crest so the repeat joins smoothly with no crescent tips -->
+  <path fill="#ffffff" d="M0 200 L1080 200 L1080 230
+    C990 230 990 246 900 246 C810 246 810 230 720 230
+    C630 230 630 246 540 246 C450 246 450 230 360 230
+    C270 230 270 246 180 246 C90 246 90 230 0 230 Z"/>
 
-  <!-- Hand-drawn ink details, same pen as the birds -->
-  <g stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <!-- inked crest line following the big wave -->
-    <path d="M0 45 C30 25 60 22 90 40 C120 58 150 60 180 45
-             C210 25 240 20 270 38 C300 56 330 55 360 45"/>
+  <!-- Sand-side details (above the shoreline): black ink, same pen as the birds -->
+  <g stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- breaking-wave curls, scattered -->
+    <path d="M52 185 C50 177 58 173 64 177 C69 180 67 186 62 185 C59 184 59 182 61 181"/>
+    <path d="M232 183 C230 175 238 171 244 175 C249 178 247 184 242 183"/>
+    <path d="M560 185 C558 177 566 173 572 177 C577 180 575 186 570 185 C567 184 567 182 569 181"/>
+    <path d="M760 183 C758 175 766 171 772 175 C777 178 775 184 770 183"/>
+    <path d="M940 185 C938 177 946 173 952 177 C957 180 955 186 950 185 C947 184 947 182 949 181"/>
 
-    <!-- little breaking-wave curls on the crests -->
-    <path d="M52 30 C50 22 58 18 64 22 C69 25 67 31 62 30 C59 29 59 27 61 26"/>
-    <path d="M232 28 C230 20 238 16 244 20 C249 23 247 29 242 28"/>
-    <path d="M150 52 C149 47 154 45 158 48"/>
+    <!-- foam bubbles spraying up into the sand (irregular x, y, r) -->
+    <circle cx="22"   cy="170" r="3"/>
+    <circle cx="63"   cy="166" r="2.5"/>
+    <circle cx="95"   cy="172" r="3.5"/>
+    <circle cx="150"  cy="168" r="2.5"/>
+    <circle cx="198"  cy="163" r="3"/>
+    <circle cx="241"  cy="171" r="3.5"/>
+    <circle cx="300"  cy="166" r="2.5"/>
+    <circle cx="349"  cy="173" r="3"/>
+    <circle cx="410"  cy="167" r="3.5"/>
+    <circle cx="470"  cy="170" r="2.5"/>
+    <circle cx="528"  cy="164" r="3"/>
+    <circle cx="600"  cy="172" r="3"/>
+    <circle cx="672"  cy="168" r="2.5"/>
+    <circle cx="740"  cy="166" r="3.5"/>
+    <circle cx="815"  cy="173" r="2.5"/>
+    <circle cx="900"  cy="167" r="3"/>
+    <circle cx="985"  cy="171" r="3"/>
+    <circle cx="1045" cy="168" r="2.5"/>
+  </g>
 
-    <!-- foam bubbles spraying up into the sand -->
-    <circle cx="15"  cy="14" r="2.5"/>
-    <circle cx="60"  cy="10" r="3"/>
-    <circle cx="110" cy="16" r="2.5"/>
-    <circle cx="240" cy="8"  r="3"/>
-    <circle cx="300" cy="14" r="2"/>
-    <circle cx="345" cy="13" r="2.5"/>
+  <!-- Water-side details (below the shoreline): white -->
+  <g stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- little breaking-wave curls -->
+    <path d="M150 207 C149 202 154 200 158 203"/>
+    <path d="M330 205 C329 200 334 198 338 201"/>
+    <path d="M600 207 C599 202 604 200 608 203"/>
+    <path d="M900 206 C899 201 904 199 908 202"/>
 
-    <!-- bubbles & ticks drifting down into the water -->
-    <path d="M40 92 C42 95 46 95 48 92"/>
-    <path d="M200 96 C202 99 206 99 208 96"/>
-    <path d="M320 90 C322 93 326 93 328 90"/>
-    <circle cx="100" cy="100" r="2"/>
-    <circle cx="270" cy="102" r="2.5"/>
-    <circle cx="150" cy="106" r="2"/>
+    <!-- ticks drifting down into the water -->
+    <path d="M40 247 C42 250 46 250 48 247"/>
+    <path d="M258 251 C260 254 264 254 266 251"/>
+    <path d="M470 245 C472 248 476 248 478 245"/>
+    <path d="M690 250 C692 253 696 253 698 250"/>
+    <path d="M880 247 C882 250 886 250 888 247"/>
+    <path d="M1035 249 C1037 252 1041 252 1043 249"/>
+
+    <!-- bubbles (irregular) -->
+    <circle cx="100"  cy="255" r="2.5"/>
+    <circle cx="210"  cy="259" r="2"/>
+    <circle cx="355"  cy="254" r="3"/>
+    <circle cx="500"  cy="258" r="2.5"/>
+    <circle cx="640"  cy="256" r="3"/>
+    <circle cx="775"  cy="261" r="2"/>
+    <circle cx="915"  cy="255" r="2.5"/>
+    <circle cx="1010" cy="259" r="3"/>
   </g>
 </svg>
