@@ -1,0 +1,49 @@
+<svg width="360" height="120" viewBox="0 0 360 120" fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+  <!-- The band carries the section colors so the sand/water boundary itself is
+       wavy. Top edge = sand (#bdab93), bottom edge = water (#7DA2AD); these match
+       the page gradient blocks above/below, so the strip blends in seamlessly and
+       hides the flat 900px line. -->
+
+  <!-- whole tile = sand color -->
+  <rect x="0" y="0" width="360" height="120" fill="#bdab93"/>
+
+  <!-- water fills everything BELOW the big wavy boundary -->
+  <path fill="#7da2ad" d="M0 45
+    C30 25 60 22 90 40 C120 58 150 60 180 45 C210 25 240 20 270 38 C300 56 330 55 360 45
+    L360 120 L0 120 Z"/>
+
+  <!-- white foam mass sitting on the wavy shoreline -->
+  <path fill="#ffffff" d="M0 45
+    C30 25 60 22 90 40 C120 58 150 60 180 45 C210 25 240 20 270 38 C300 56 330 55 360 45
+    L360 78
+    C330 92 300 96 270 82 C240 70 210 68 180 82 C150 94 120 96 90 82 C60 70 30 72 0 78 Z"/>
+
+  <!-- Hand-drawn ink details, same pen as the birds -->
+  <g stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- inked crest line following the big wave -->
+    <path d="M0 45 C30 25 60 22 90 40 C120 58 150 60 180 45
+             C210 25 240 20 270 38 C300 56 330 55 360 45"/>
+
+    <!-- little breaking-wave curls on the crests -->
+    <path d="M52 30 C50 22 58 18 64 22 C69 25 67 31 62 30 C59 29 59 27 61 26"/>
+    <path d="M232 28 C230 20 238 16 244 20 C249 23 247 29 242 28"/>
+    <path d="M150 52 C149 47 154 45 158 48"/>
+
+    <!-- foam bubbles spraying up into the sand -->
+    <circle cx="15"  cy="14" r="2.5"/>
+    <circle cx="60"  cy="10" r="3"/>
+    <circle cx="110" cy="16" r="2.5"/>
+    <circle cx="240" cy="8"  r="3"/>
+    <circle cx="300" cy="14" r="2"/>
+    <circle cx="345" cy="13" r="2.5"/>
+
+    <!-- bubbles & ticks drifting down into the water -->
+    <path d="M40 92 C42 95 46 95 48 92"/>
+    <path d="M200 96 C202 99 206 99 208 96"/>
+    <path d="M320 90 C322 93 326 93 328 90"/>
+    <circle cx="100" cy="100" r="2"/>
+    <circle cx="270" cy="102" r="2.5"/>
+    <circle cx="150" cy="106" r="2"/>
+  </g>
+</svg>

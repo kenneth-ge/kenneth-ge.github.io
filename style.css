@@ -7,9 +7,52 @@ body {
         url('assets/bird.svg') calc(100% - 40px) 50px / 50px auto no-repeat,
         url('assets/bird.svg') calc(100% - 90px) 90px / 50px auto no-repeat,
         url('assets/sand.svg') center calc(450px - 95px) / 110% 100px no-repeat,
+        url('assets/foam.svg') 0 866px / auto 90px repeat-x,
         linear-gradient(to bottom,
             #E9EEF4 0 450px,
             #bdab93 450px 900px,
             #7DA2AD 900px 1600px,
             #274152 100%);
+}
+
+.links {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Desktop: bio text on the left, image on the right */
+.bio-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.bio {
+    flex: 1;
+}
+
+.headshot {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+}
+
+/* Mobile: stack in a single column; -reverse puts the image above the text */
+@media (max-width: 767px) {
+    .bio-section {
+        flex-direction: column-reverse;
+        gap: 20px;
+    }
+
+    .bio,
+    .headshot {
+        flex: none;
+        width: 100%;
+    }
 }
