@@ -1,0 +1,88 @@
+body {
+    /* Where the sea-foam layer sits; reused for min-height so the body always
+       reaches the bottom of the foam even though it's out-of-flow (absolute). */
+    --foam-top: 720px;
+    --foam-height: 260px;
+    min-height: max(100vh, calc(var(--foam-top) + var(--foam-height)));
+    margin: 0;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+    font-family: 'Courier Prime', monospace;
+    background:
+        url('assets/bird.svg') calc(100% - 40px) 50px / 50px auto no-repeat,
+        url('assets/bird.svg') calc(100% - 90px) 90px / 50px auto no-repeat,
+        url('assets/sand.svg') center calc(450px - 95px) / 110% 100px no-repeat,
+        linear-gradient(to bottom,
+            #E9EEF4 0 450px,
+            #bdab93 450px 850px,
+            #7DA2AD 850px 1600px,
+            #274152 100%);
+}
+
+/* Sea-foam sand/water boundary, tilted down-and-right.
+   Tiled so bubbles stay round; the whole layer is rotated to make the slope. */
+body::before {
+    content: '';
+    position: absolute;
+    left: -10%;
+    width: 120%;
+    height: var(--foam-height);
+    top: var(--foam-top);
+    z-index: -1;
+    pointer-events: none;
+    background: url('assets/foam.svg') center / auto 260px repeat-x;
+    transform: rotate(3deg);
+    transform-origin: center;
+}
+
+.links {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Desktop: bio text on the left, image on the right */
+.bio-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.bio {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid black;
+}
+
+.headshot {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+a {
+    color: black;
+    text-decoration-color: rgba(0, 0, 0, 0.3);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+/* Mobile: stack in a single column; -reverse puts the image above the text */
+@media (max-width: 767px) {
+    .bio-section {
+        flex-direction: column-reverse;
+        gap: 20px;
+    }
+
+    .bio,
+    .headshot {
+        flex: none;
+        width: 100%;
+    }
+}

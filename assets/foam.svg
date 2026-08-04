@@ -1,0 +1,76 @@
+<svg width="1080" height="400" viewBox="0 0 1080 400" fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+  <!-- Wide tile (~3x) so the scattered foam details only repeat every ~700px on
+       screen, hiding the regularity. Sand = #bdab93, water = #7da2ad (match the
+       CSS gradient stops). Shoreline is straight at y=200; the slope is the CSS rotation. -->
+
+  <!-- whole tile = sand color -->
+  <rect x="0" y="0" width="1080" height="400" fill="#bdab93"/>
+
+  <!-- water fills everything below the straight shoreline -->
+  <path fill="#7da2ad" d="M0 200 L1080 200 L1080 400 L0 400 Z"/>
+
+  <!-- white foam mass: straight top, gentle swoops below that are flat (horizontal
+       tangent) at every crest so the repeat joins smoothly with no crescent tips -->
+  <path fill="#ffffff" d="M0 200 L1080 200 L1080 230
+    C990 230 990 246 900 246 C810 246 810 230 720 230
+    C630 230 630 246 540 246 C450 246 450 230 360 230
+    C270 230 270 246 180 246 C90 246 90 230 0 230 Z"/>
+
+  <!-- Sand-side details (above the shoreline): black ink, same pen as the birds -->
+  <g stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- breaking-wave curls, scattered -->
+    <path d="M52 185 C50 177 58 173 64 177 C69 180 67 186 62 185 C59 184 59 182 61 181"/>
+    <path d="M232 183 C230 175 238 171 244 175 C249 178 247 184 242 183"/>
+    <path d="M560 185 C558 177 566 173 572 177 C577 180 575 186 570 185 C567 184 567 182 569 181"/>
+    <path d="M760 183 C758 175 766 171 772 175 C777 178 775 184 770 183"/>
+    <path d="M940 185 C938 177 946 173 952 177 C957 180 955 186 950 185 C947 184 947 182 949 181"/>
+
+    <!-- foam bubbles spraying up into the sand (irregular x, y, r) -->
+    <circle cx="22"   cy="170" r="3"/>
+    <circle cx="63"   cy="166" r="2.5"/>
+    <circle cx="95"   cy="172" r="3.5"/>
+    <circle cx="150"  cy="168" r="2.5"/>
+    <circle cx="198"  cy="163" r="3"/>
+    <circle cx="241"  cy="171" r="3.5"/>
+    <circle cx="300"  cy="166" r="2.5"/>
+    <circle cx="349"  cy="173" r="3"/>
+    <circle cx="410"  cy="167" r="3.5"/>
+    <circle cx="470"  cy="170" r="2.5"/>
+    <circle cx="528"  cy="164" r="3"/>
+    <circle cx="600"  cy="172" r="3"/>
+    <circle cx="672"  cy="168" r="2.5"/>
+    <circle cx="740"  cy="166" r="3.5"/>
+    <circle cx="815"  cy="173" r="2.5"/>
+    <circle cx="900"  cy="167" r="3"/>
+    <circle cx="985"  cy="171" r="3"/>
+    <circle cx="1045" cy="168" r="2.5"/>
+  </g>
+
+  <!-- Water-side details (below the shoreline): white -->
+  <g stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- little breaking-wave curls -->
+    <path d="M150 207 C149 202 154 200 158 203"/>
+    <path d="M330 205 C329 200 334 198 338 201"/>
+    <path d="M600 207 C599 202 604 200 608 203"/>
+    <path d="M900 206 C899 201 904 199 908 202"/>
+
+    <!-- ticks drifting down into the water -->
+    <path d="M40 247 C42 250 46 250 48 247"/>
+    <path d="M258 251 C260 254 264 254 266 251"/>
+    <path d="M470 245 C472 248 476 248 478 245"/>
+    <path d="M690 250 C692 253 696 253 698 250"/>
+    <path d="M880 247 C882 250 886 250 888 247"/>
+    <path d="M1035 249 C1037 252 1041 252 1043 249"/>
+
+    <!-- bubbles (irregular) -->
+    <circle cx="100"  cy="255" r="2.5"/>
+    <circle cx="210"  cy="259" r="2"/>
+    <circle cx="355"  cy="254" r="3"/>
+    <circle cx="500"  cy="258" r="2.5"/>
+    <circle cx="640"  cy="256" r="3"/>
+    <circle cx="775"  cy="261" r="2"/>
+    <circle cx="915"  cy="255" r="2.5"/>
+    <circle cx="1010" cy="259" r="3"/>
+  </g>
+</svg>
